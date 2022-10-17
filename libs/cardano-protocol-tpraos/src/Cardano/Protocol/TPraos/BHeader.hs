@@ -447,10 +447,11 @@ checkLeaderNatValue bn σ f =
       BELOW _ _ -> True
       MaxReached _ -> False
   where
-    c, recip_q, x :: FixedPoint
+    c, recip_q, sigma, x :: FixedPoint
     c = activeSlotLog f
     recip_q = fromRational (toInteger certNatMax % toInteger (certNatMax - certNat))
-    x = (trace("σ: " ++ show (-fromRational σ)) $ (-fromRational σ)) * (trace("c: " ++ show c) $ c)
+    x = (trace("sigma: " ++ show (-sigma)) $ (-sigma)) * (trace("c: " ++ show c) $ c)
+    sigma = fromRational σ
     certNatMax = bvMaxValue bn
     certNat = bvValue bn
 
