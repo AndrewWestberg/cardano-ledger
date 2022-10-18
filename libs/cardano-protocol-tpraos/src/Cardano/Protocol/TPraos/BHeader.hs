@@ -449,7 +449,7 @@ checkLeaderNatValue bn σ f =
   where
     c, recip_q, sigma, x :: FixedPoint
     c = activeSlotLog f
-    recip_q = fromRational (toInteger certNatMax % toInteger (certNatMax - certNat))
+    recip_q = fromRational (toInteger certNatMax % toInteger (certNatMax - (trace("certNat: " ++ show certNat) $ certNat)))
     x = (trace("sigma: " ++ show (-sigma)) $ (-sigma)) * (trace("c: " ++ show c) $ c)
     sigma = fromRational σ
     certNatMax = bvMaxValue bn
