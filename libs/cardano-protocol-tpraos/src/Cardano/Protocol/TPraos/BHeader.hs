@@ -37,6 +37,7 @@ module Cardano.Protocol.TPraos.BHeader (
 )
 where
 
+import Debug.Trace
 import qualified Cardano.Crypto.Hash.Class as Hash
 import qualified Cardano.Crypto.KES as KES
 import Cardano.Crypto.Util (SignableRepresentation (..))
@@ -440,7 +441,7 @@ checkLeaderNatValue bn σ f =
     -- This is a testing convenience, the active slot coefficient should not
     -- bet set above one half otherwise.
       True
-    else case taylorExpCmp 3 recip_q x of
+    else trace(debugInfo recip_q x) $ case taylorExpCmp 3 recip_q x of
       ABOVE _ _ -> False
       BELOW _ _ -> True
       MaxReached _ -> False
@@ -451,6 +452,9 @@ checkLeaderNatValue bn σ f =
     x = -fromRational σ * c
     certNatMax = bvMaxValue bn
     certNat = bvValue bn
+
+    debugInfo :: FixedPoint -> FixedPoint -> String
+    debugInfo a b = "recip_q: " ++ show a ++ ", x: " ++ show b
 
 seedEta :: Nonce
 seedEta = mkNonceFromNumber 0
